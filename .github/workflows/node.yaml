@@ -6,10 +6,14 @@ on:
 
 jobs:
   testing:
-    name: Testing on Node v${{ matrix.node-version }}
-    runs-on: ubuntu-20.04
+    name: Testing for Node v${{ matrix.node-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os:
+          - macos-11.0
+          - ubuntu-20.04
+          - windows-2019
         node-version:
           - 12
           - 14
