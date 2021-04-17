@@ -1,0 +1,29 @@
+name: Testing
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  testing:
+    name: Testing on Node v${{ metrix.node-version }}
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version:
+          - 12
+          - 14
+          - 15
+    steps:
+      - uses: actions/checkout@v2
+        name: Checking out repository
+      - uses: actions/setup-node@v2
+        name: Installing nodejs
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install
+        name: Installing dependencies
+      - run: npx eslint src
+        name: Testing linting
+      - run: yarn test
+        name: Unit testing
