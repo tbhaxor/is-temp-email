@@ -1,4 +1,4 @@
-# IsTempEmail
+# IsTempEmail [![Testing](https://github.com/tbhaxor/is-temp-email/actions/workflows/node.yaml/badge.svg?branch=main)](https://github.com/tbhaxor/is-temp-email/actions/workflows/node.yaml)
 
 > Slimline nodejs library to check whether the email is temporary / disposable emails
 
