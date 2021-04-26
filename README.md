@@ -50,7 +50,7 @@ isTempEmail.single("EMAIL").then(r => {
 
 **Bulk email usage** <br>
 ```js
-isTempEmail.single(["EMAIL1", "EMAIL2"]).then( r => {
+isTempEmail.bulk(["EMAIL1", "EMAIL2"]).then( r => {
   console.log(r["EMAIL1"]) // can be true or false
 }).catch(console.error)
 ```
