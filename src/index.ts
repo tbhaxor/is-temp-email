@@ -42,7 +42,8 @@ function kickBoxDotCom(email: string): Promise<boolean> {
  * @return {Promise<boolean>} Promise-like boolean flag. `true` means the email is temporary and `false` means it's legit
  */
 export function single(email: string): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
+  return new Promise<boolean>((resolve) => {
+    // eslint-disable-next-line
     ;(async () => {
       const results = await Promise.all([blockTemporaryEmailDotCom(email), debounceDotIo(email), kickBoxDotCom(email)])
       const result = results.findIndex((v) => v == true) != -1
@@ -58,18 +59,16 @@ export function single(email: string): Promise<boolean> {
  * @return {Promise<Record<string, boolean>>} Promise-like object. Where keys are the emails and values are the boolean flag for temporary email
  */
 export function bulk(emails: string[]): Promise<Record<string, boolean>> {
-  return new Promise<Record<string, boolean>>((resolve, reject) => {
+  return new Promise<Record<string, boolean>>((resolve) => {
     const promises: Promise<boolean>[] = []
 
     for (const email of emails) promises.push(single(email))
 
-    Promise.all(promises)
-      .then((temps) => {
-        const data: Record<string, boolean> = {}
+    Promise.all(promises).then((temps) => {
+      const data: Record<string, boolean> = {}
 
-        for (let i = 0; i < emails.length; i++) data[emails[i]] = temps[i]
-        resolve(data)
-      })
-      .catch(reject)
+      for (let i = 0; i < emails.length; i++) data[emails[i]] = temps[i]
+      resolve(data)
+    })
   })
 }
