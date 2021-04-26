@@ -33,5 +33,7 @@
       "eslint src"
     ]
   },
-  "typings": "./dist/index.d.ts"
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
 }
