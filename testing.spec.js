@@ -14,11 +14,11 @@ describe('Temporary email checker', function () {
       .catch(done)
   })
 
-  it('should not detect zefara.com single email temporary', (done) => {
+  it('should detect zefara.com single email temporary', (done) => {
     isTempEmail
       .single('relor60727@zefara.com')
       .then((r) => {
-        expect(r).to.be.false
+        expect(r).to.be.true
         done()
       })
       .catch(done)
@@ -28,7 +28,7 @@ describe('Temporary email checker', function () {
     const emails = {
       'tbhaxor@yopmail.com': true,
       'tbhaxor@gmail.com': false,
-      'relor60727@zefara.com': false,
+      'relor60727@zefara.com': true,
     }
     isTempEmail
       .bulk(Object.keys(emails))

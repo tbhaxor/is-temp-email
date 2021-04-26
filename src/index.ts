@@ -1,5 +1,40 @@
-import https from 'https'
+import axios from 'axios'
 
+function blockTemporaryEmailDotCom(email: string): Promise<boolean> {
+  return new Promise<boolean>((resolve) => {
+    axios
+      .get(`https://block-temporary-email.com/check/email/${email}`, { responseType: 'json' })
+      .then((r) => {
+        const body: { temporary?: boolean } = r.data
+
+        if (typeof body.temporary == 'undefined') resolve(false)
+        else resolve(body.temporary)
+      })
+      .catch(() => resolve(false))
+  })
+}
+
+function debounceDotIo(email: string): Promise<boolean> {
+  return new Promise<boolean>((resolve) => {
+    axios.get(`https://disposable.debounce.io/?email=${email}`, { responseType: 'json' }).then((r) => {
+      const body: { disposable?: string } = r.data
+
+      if (typeof body.disposable == 'undefined') resolve(false)
+      else resolve(body.disposable === 'true')
+    })
+  })
+}
+
+function kickBoxDotCom(email: string): Promise<boolean> {
+  return new Promise<boolean>((resolve) => {
+    axios.get(`https://open.kickbox.com/v1/disposable/${email}`, { responseType: 'json' }).then((r) => {
+      const body: { disposable?: boolean } = r.data
+
+      if (typeof body.disposable == 'undefined') resolve(false)
+      else resolve(body.disposable)
+    })
+  })
+}
 /**
  * Single email check
  *
@@ -8,19 +43,12 @@ import https from 'https'
  */
 export function single(email: string): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
-    https
-      .get(`https://block-temporary-email.com/check/email/${email}`, (res) => {
-        res.setEncoding('utf8')
-        let body: string | Record<string, any> = ''
-        res.on('data', (chunk) => (body += chunk.toString()))
-        res.on('end', () => {
-          body = JSON.parse(body as string) as Record<string, any>
-          if (body.error) return reject(new Error(body.error))
-          else return resolve(body.temporary)
-        })
-        res.on('error', reject)
-      })
-      .on('error', reject)
+    ;(async () => {
+      const results = await Promise.all([blockTemporaryEmailDotCom(email), debounceDotIo(email), kickBoxDotCom(email)])
+      const result = results.findIndex((v) => v == true) != -1
+
+      resolve(result)
+    })()
   })
 }
 
