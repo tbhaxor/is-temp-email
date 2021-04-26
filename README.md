@@ -10,8 +10,8 @@ This module is for nodejs apps, with this you can check the email if temporary o
 
 1. Single or bulk email checking
 2. Free of cost (no api pricing)
-3. No third party dependency 
-4. Shipped with typings for better intellisense
+3. Shipped with typings for better intellisense
+4. Searches in **three different** indices
 
 ## Requirements
 
