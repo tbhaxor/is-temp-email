@@ -11,7 +11,7 @@ This module is for nodejs apps, with this you can check the email if temporary o
 1. Single or bulk email checking
 2. Free of cost (no api pricing)
 3. Shipped with typings for better intellisense
-4. Searches in **three different** indices
+4. Searches in **two different** indices
 
 ## Requirements
 
@@ -61,5 +61,5 @@ This project is licensed under [MIT License](https://github.com/tbhaxor/is-temp-
 
 ## Contact the Author
 
-+ [Email](mailto:tbhaxor@gmail.com)
++ [Email](mailto:tbhaxor@pm.me)
 + [LinkedIn](https://linkedin.com/in/gurkirat--singh)
