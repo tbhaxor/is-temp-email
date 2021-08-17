@@ -1,19 +1,5 @@
 import axios from 'axios'
 
-function blockTemporaryEmailDotCom(email: string): Promise<boolean> {
-  return new Promise<boolean>((resolve) => {
-    axios
-      .get(`https://block-temporary-email.com/check/email/${email}`, { responseType: 'json' })
-      .then((r) => {
-        const body: { temporary?: boolean } = r.data
-
-        if (typeof body.temporary == 'undefined') resolve(false)
-        else resolve(body.temporary)
-      })
-      .catch(() => resolve(false))
-  })
-}
-
 function debounceDotIo(email: string): Promise<boolean> {
   return new Promise<boolean>((resolve) => {
     axios.get(`https://disposable.debounce.io/?email=${email}`, { responseType: 'json' }).then((r) => {
@@ -45,7 +31,7 @@ export function single(email: string): Promise<boolean> {
   return new Promise<boolean>((resolve) => {
     // eslint-disable-next-line
     ;(async () => {
-      const results = await Promise.all([blockTemporaryEmailDotCom(email), debounceDotIo(email), kickBoxDotCom(email)])
+      const results = await Promise.all([debounceDotIo(email), kickBoxDotCom(email)])
       const result = results.findIndex((v) => v == true) != -1
 
       resolve(result)
