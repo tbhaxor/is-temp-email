@@ -14,12 +14,8 @@ jobs:
     strategy:
       matrix:
         os:
-          - macos-10.15
-          - macos-11.0
           - ubuntu-18.04
           - ubuntu-20.04
-          - windows-2016
-          - windows-2019
         node-version:
           - 12
           - 14
